@@ -7,7 +7,7 @@
 
 Summary:	PPAPI-host NPAPI-plugin adapter for flashplayer in npapi based browsers
 Name:		freshplayerplugin
-Version:	0.3.0
+Version:	0.3.1
 Release:	0.1
 License:	MIT
 Group:		X11/Applications/Multimedia
@@ -29,6 +29,7 @@ BuildRequires:	libv4l-devel
 %{?with_vaapi:BuildRequires: libva-devel}
 BuildRequires:	openssl-devel
 %{?with_pulseaudio:BuildRequires: pulseaudio-devel}
+BuildRequires:	ragel
 BuildRequires:	rpmbuild(macros) >= 1.357
 BuildRequires:	xorg-lib-libXrandr-devel
 BuildRequires:	xorg-lib-libXrender-devel
