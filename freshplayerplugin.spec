@@ -12,7 +12,7 @@ Release:	0.1
 License:	MIT
 Group:		X11/Applications/Multimedia
 Source0:	https://github.com/i-rinat/freshplayerplugin/archive/v%{version}/%{name}-%{version}.tar.gz
-# Source0-md5:	e8661cf64acbb6872f4b4aed7f2384a4
+# Source0-md5:	31c0ab73368edc97035dbe72223fa502
 URL:		https://github.com/i-rinat/freshplayerplugin
 BuildRequires:	Mesa-libEGL-devel
 BuildRequires:	Mesa-libGLES-devel
