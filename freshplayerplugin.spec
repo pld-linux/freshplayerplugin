@@ -18,6 +18,7 @@ BuildRequires:	Mesa-libEGL-devel
 BuildRequires:	Mesa-libGLES-devel
 BuildRequires:	alsa-lib-devel
 BuildRequires:	cmake >= 2.8.8
+BuildRequires:	ffmpeg-devel
 BuildRequires:	freetype-devel
 BuildRequires:	glib2-devel
 %{!?with_gtk3:BuildRequires: gtk+2-devel}
@@ -27,7 +28,9 @@ BuildRequires:	libconfig-devel
 BuildRequires:	libevent-devel
 BuildRequires:	libv4l-devel
 %{?with_vaapi:BuildRequires: libva-devel}
+BuildRequires:	libva-x11-devel
 BuildRequires:	openssl-devel
+BuildRequires:	pkgconfig
 %{?with_pulseaudio:BuildRequires: pulseaudio-devel}
 BuildRequires:	ragel
 BuildRequires:	rpmbuild(macros) >= 1.357
