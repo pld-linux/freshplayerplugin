@@ -7,12 +7,12 @@
 
 Summary:	PPAPI-host NPAPI-plugin adapter for flashplayer in npapi based browsers
 Name:		freshplayerplugin
-Version:	0.3.2
+Version:	0.3.3
 Release:	1
 License:	MIT
 Group:		X11/Applications/Multimedia
 Source0:	https://github.com/i-rinat/freshplayerplugin/archive/v%{version}/%{name}-%{version}.tar.gz
-# Source0-md5:	24fffd1499e28872d13745a70b900d48
+# Source0-md5:	c9960fd1e419d3d495fe6a9186286718
 URL:		https://github.com/i-rinat/freshplayerplugin
 BuildRequires:	Mesa-libEGL-devel
 BuildRequires:	Mesa-libGLES-devel
@@ -24,7 +24,6 @@ BuildRequires:	glib2-devel
 %{!?with_gtk3:BuildRequires: gtk+2-devel}
 %{?with_gtk3:BuildRequires: gtk+3-devel}
 %{?with_jack:BuildRequires: jack-audio-connection-kit-devel}
-BuildRequires:	libconfig-devel
 BuildRequires:	libevent-devel
 BuildRequires:	libv4l-devel
 %{?with_vaapi:BuildRequires: libva-devel}
@@ -61,7 +60,7 @@ cd build
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT%{_browserpluginsdir}
-install -p build/libfreshwrapper-pepperflash.so $RPM_BUILD_ROOT%{_browserpluginsdir}
+install -p build/libfreshwrapper-flashplayer.so $RPM_BUILD_ROOT%{_browserpluginsdir}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -77,4 +76,4 @@ fi
 %files
 %defattr(644,root,root,755)
 %doc ChangeLog data/freshwrapper.conf.example README.md
-%attr(755,root,root) %{_browserpluginsdir}/libfreshwrapper-pepperflash.so
+%attr(755,root,root) %{_browserpluginsdir}/libfreshwrapper-flashplayer.so
