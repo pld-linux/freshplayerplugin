@@ -7,12 +7,12 @@
 
 Summary:	PPAPI-host NPAPI-plugin adapter for flashplayer in npapi based browsers
 Name:		freshplayerplugin
-Version:	0.3.3
+Version:	0.3.4
 Release:	1
 License:	MIT
 Group:		X11/Applications/Multimedia
 Source0:	https://github.com/i-rinat/freshplayerplugin/archive/v%{version}/%{name}-%{version}.tar.gz
-# Source0-md5:	c9960fd1e419d3d495fe6a9186286718
+# Source0-md5:	e5d5df12de8dbb1caf4e349b4e4ae520
 URL:		https://github.com/i-rinat/freshplayerplugin
 BuildRequires:	Mesa-libEGL-devel
 BuildRequires:	Mesa-libGLES-devel
