@@ -1,39 +1,47 @@
 #
 # Conditional build:
-%bcond_with	gtk3		# GTK+ 3.x instead of 2.x
+%bcond_without	gles		# GLESv2 instead of ANGLE
 %bcond_without	jack		# JACK support
 %bcond_without	pulseaudio	# PulseAudio support
-%bcond_without	vaapi		# VA-API support
+%bcond_without	ffmpeg		# ffmpeg with hardware acceleration (VA-API/VDPAU) support
 
 Summary:	PPAPI-host NPAPI-plugin adapter for flashplayer in NPAPI based browsers
 Summary(pl.UTF-8):	Przejściówka hostująca wtyczki PPAPI dla flashplayera w przeglądarkach opartych na NPAPI
 Name:		freshplayerplugin
-Version:	0.3.4
+Version:	0.3.11
 Release:	1
 License:	MIT
 Group:		X11/Applications/Multimedia
 Source0:	https://github.com/i-rinat/freshplayerplugin/archive/v%{version}/%{name}-%{version}.tar.gz
-# Source0-md5:	e5d5df12de8dbb1caf4e349b4e4ae520
+# Source0-md5:	c34383e281135b7d40e29444af189d34
 URL:		https://github.com/i-rinat/freshplayerplugin
-BuildRequires:	Mesa-libEGL-devel
-BuildRequires:	Mesa-libGLES-devel
+BuildRequires:	OpenGL-devel
+%{?with_gles:BuildRequires:	OpenGLESv2-devel}
 BuildRequires:	alsa-lib-devel
+BuildRequires:	cairo-devel
 BuildRequires:	cmake >= 2.8.8
-BuildRequires:	ffmpeg-devel
-BuildRequires:	freetype-devel
-BuildRequires:	glib2-devel
-%{!?with_gtk3:BuildRequires:	gtk+2-devel >= 2.0}
-%{?with_gtk3:BuildRequires:	gtk+3-devel >= 3.0}
+# libavcodec libavutil
+%{?with_ffmpeg:BuildRequires:	ffmpeg-devel}
+BuildRequires:	freetype-devel >= 2.0
+BuildRequires:	glib2-devel >= 2.0
 %{?with_jack:BuildRequires:	jack-audio-connection-kit-devel}
+BuildRequires:	libdrm-devel
 BuildRequires:	libevent-devel
+BuildRequires:	libicu-devel
 BuildRequires:	libv4l-devel
-%{?with_vaapi:BuildRequires:	libva-devel}
-BuildRequires:	libva-x11-devel
+%{?with_ffmpeg:BuildRequires:	libva-devel}
+%{?with_ffmpeg:BuildRequires:	libva-x11-devel}
+%{?with_ffmpeg:BuildRequires:	libvdpau-devel}
 BuildRequires:	openssl-devel
+BuildRequires:	pango-devel
 BuildRequires:	pkgconfig
+BuildRequires:	pkgconfig(gl)
+%{?with_gles:BuildRequires:	pkgconfig(glesv2)}
 %{?with_pulseaudio:BuildRequires:	pulseaudio-devel}
 BuildRequires:	ragel
 BuildRequires:	rpmbuild(macros) >= 1.605
+%{?with_jack:BuildRequires:	soxr-devel}
+BuildRequires:	xorg-lib-libX11-devel
 BuildRequires:	xorg-lib-libXrandr-devel
 BuildRequires:	xorg-lib-libXrender-devel
 Requires:	browser-plugins >= 2.0
@@ -53,13 +61,12 @@ przeglądarkach opartych na NPAPI.
 %build
 install -d build
 cd build
-%cmake \
-	-DCMAKE_SKIP_RPATH=1 \
-	%{?with_jack:-DJACK=1} \
-	%{?with_pulseaudio:-DPULSEAUDIO=1} \
-	-DWITH_GTK=%{!?with_gtk3:2}%{?with_gtk3:3} \
-	-DWITH_HWDEC=%{!?with_vaapi:0}%{?with_vaapi:1} \
-	..
+%cmake .. \
+	-DCMAKE_SKIP_RPATH=ON \
+	%{!?with_ffmpeg:-DWITH_HWDEC=OFF} \
+	%{!?with_jack:-DWITH_JACK=OFF} \
+	%{!?with_pulseaudio:-DWITH_PULSEAUDIO=OFF}
+
 %{__make}
 
 %install
@@ -81,5 +88,5 @@ fi
 
 %files
 %defattr(644,root,root,755)
-%doc ChangeLog data/freshwrapper.conf.example README.md
+%doc ChangeLog LICENSE README.md data/freshwrapper.conf.example
 %attr(755,root,root) %{_browserpluginsdir}/libfreshwrapper-flashplayer.so
